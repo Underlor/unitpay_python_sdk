@@ -7,7 +7,7 @@ from urllib.request import urlopen
 
 from unitpay_python_sdk.exceptions import EmptyParams, BadIP, EmptyMethod, EmptySignature, BadSignature, \
     UnsupportedMethod
-from unitpay_python_sdk.utils import remove_signature, dict_to_sorted_kv_list, value_list_from_kv_list, parse_params, \
+from unitpay_python_sdk.utils import remove_signature, dict_to_sorted_kv_list, value_list_from_kv_list, \
     insert_url_encode
 
 
@@ -71,7 +71,7 @@ class UnitPay:
         return hashlib.sha256(params_string).hexdigest()
 
     def check_handler_request(self, request_params: dict, ip):
-        params = parse_params(request_params)
+        params = self.parse_params(request_params)
 
         if not params:
             raise EmptyParams()

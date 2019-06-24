@@ -1,13 +1,12 @@
 from unitpay_python_sdk.exceptions import EmptyParams, BadIP, EmptyMethod, EmptySignature, BadSignature, \
     UnsupportedMethod
-from unitpay_python_sdk.utils import parse_params
 
 
 def test_unitpay_get_signature(unitpay_api, unitpay_check_data, unitpay_check_signature):
     """
         Тест метода получения сигнатуры словаря с методом
     """
-    params = parse_params(unitpay_check_data)
+    params = unitpay_api.parse_params(unitpay_check_data)
     method = unitpay_check_data['method']
     signature = unitpay_api.get_signature(params, method)
     assert signature == unitpay_check_signature

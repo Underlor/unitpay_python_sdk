@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='unitpay_python_sdk',
-    version='1.0.0',
+    version='1.0.1',
     author='Underlor',
     author_email='cfyz_74@mail.ru',
     url='https://github.com/Underlor/unitpay_python_sdk',
