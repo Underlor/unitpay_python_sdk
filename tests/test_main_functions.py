@@ -1,3 +1,5 @@
+import pytest
+
 from unitpay_python_sdk.exceptions import EmptyParams, BadIP, EmptyMethod, EmptySignature, BadSignature, \
     UnsupportedMethod
 
@@ -24,24 +26,16 @@ def test_unitpay_check_handler_request_empty_params(unitpay_api, unitpay_check_d
     """
         Тест метода проверки запроса пустые параметры
     """
-
-    try:
-        result = unitpay_api.check_handler_request({}, ip='127.0.0.1')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, EmptyParams)
+    with pytest.raises(EmptyParams):
+        unitpay_api.check_handler_request({}, ip='127.0.0.1')
 
 
 def test_unitpay_check_handler_request_bad_ip(unitpay_api, unitpay_check_data):
     """
         Тест метода проверки запроса адрес не в списке разрешенных
     """
-
-    try:
-        result = unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.0')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, BadIP)
+    with pytest.raises(BadIP):
+        unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.0')
 
 
 def test_unitpay_check_handler_request_empty_method(unitpay_api, unitpay_check_data):
@@ -50,11 +44,8 @@ def test_unitpay_check_handler_request_empty_method(unitpay_api, unitpay_check_d
     """
 
     del unitpay_check_data['method']
-    try:
-        result = unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, EmptyMethod)
+    with pytest.raises(EmptyMethod):
+        unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
 
 
 def test_unitpay_check_handler_request_empty_signature(unitpay_api, unitpay_check_data):
@@ -63,11 +54,8 @@ def test_unitpay_check_handler_request_empty_signature(unitpay_api, unitpay_chec
     """
 
     del unitpay_check_data['params[signature]']
-    try:
-        result = unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, EmptySignature)
+    with pytest.raises(EmptySignature):
+        unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
 
 
 def test_unitpay_check_handler_request_bad_signature(unitpay_api, unitpay_check_data):
@@ -76,11 +64,8 @@ def test_unitpay_check_handler_request_bad_signature(unitpay_api, unitpay_check_
     """
 
     unitpay_check_data['params[signature]'] = '123'
-    try:
-        result = unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, BadSignature)
+    with pytest.raises(BadSignature):
+        unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
 
 
 def test_unitpay_check_handler_request_unsupported_method(unitpay_api, unitpay_check_data):
@@ -89,8 +74,5 @@ def test_unitpay_check_handler_request_unsupported_method(unitpay_api, unitpay_c
     """
 
     unitpay_check_data['method'] = '123'
-    try:
-        result = unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
-        assert not result
-    except Exception as e:
-        assert isinstance(e, UnsupportedMethod)
+    with pytest.raises(UnsupportedMethod):
+        unitpay_api.check_handler_request(unitpay_check_data, ip='127.0.0.1')
